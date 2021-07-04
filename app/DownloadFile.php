@@ -12,7 +12,7 @@ class DownloadFile
 
     public function  downloadFile(Request $request){
 
-        $file = Storage::get('/uploaded');
+        $file = Storage::get('/uploads');
         return response()->header = array(
             'Content-Type:' . mime_content_type($file),
             'Content-Length' . filesize($file),

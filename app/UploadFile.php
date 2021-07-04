@@ -21,10 +21,12 @@ class UploadFile
         if($request->file()->isValid()){
             $filename = time(). '_' . $request->file->getClientOriginalName();
             $filepath = $request->file('file')->move('uploads', $filename, 'public');
-            $filesize  = $request->file('file')->getClientSize($filemodel);
+            $filesize  = $request->file('file')->getClientSize();
+            $filemime = $request->file('file')->getClientMimeType();
 
             $filemodel->name = time().'_'.$request->file->getClientOriginalName();
             $filemodel->file_path =  '/storage' . $filepath;
+            $filemodel->mime = '/storage' . $filemime;
             $filemodel->save();
 
 
