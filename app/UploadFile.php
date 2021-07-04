@@ -18,14 +18,20 @@ class UploadFile
 
         $filemodel = new File;
 
-        if($request->file()){
+        if($request->file()->isValid()){
             $filename = time(). '_' . $request->file->getClientOriginalName();
             $filepath = $request->file('file')->move('uploads', $filename, 'public');
+            $filesize  = $request->file('file')->getClientSize($filemodel);
 
             $filemodel->name = time().'_'.$request->file->getClientOriginalName();
             $filemodel->file_path =  '/storage' . $filepath;
             $filemodel->save();
+
+
+            return back()->with('success your file has been uploaded')->with('file' ,$filename);
         }
+
+        return response()->getErrorMessage();
 
 
     }
